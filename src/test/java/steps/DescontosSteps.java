@@ -3,42 +3,36 @@ package steps;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import static org.junit.Assert.assertEquals;
+import pages.HomePage;
+import runner.RunCucumberTest;
 
-public class DescontosSteps {
+public class DescontosSteps extends RunCucumberTest {
 
-    WebDriver driver = new ChromeDriver();
+    HomePage homePage = new HomePage(driver);
 
     @Dado("^que estou no site da qazando$")
     public void que_estou_no_site_da_qazando() {
-        driver.get("https://www.qazando.com.br");
+        homePage.acessarAplicacao();
+
     }
 
     @Quando("^eu preencho meu email$")
     public void eu_preencho_meu_email() throws InterruptedException {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollTo(0,10000)");
-        Thread.sleep(3000);
+        homePage.scrollDown();
+        homePage.preencherEmail();
 
-        driver.findElement(By.id("email")).sendKeys("david.13rodrigues@hotmail.com");
     }
 
     @Quando("^clico em ganhar cupom$")
     public void clico_em_ganhar_cupom() {
-        driver.findElement(By.xpath("/html/body")).click();
-        driver.findElement(By.id("button")).click();
+        homePage.clickGanharDesconto();
 
     }
 
     @Entao("^eu vejo o codigo de desconto$")
     public void eu_vejo_o_codigo_de_desconto() {
-        String texto_cupom = driver.findElement(By.cssSelector("#cupom > h2 > span")).getText();
-        assertEquals("O codigo esta correto!", "QAZANDO15OFF", texto_cupom);
-        driver.quit();
+       homePage.verificarCupomDesconto();
+
     }
 }
 
