@@ -11,12 +11,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"json:target/cucumber-report/cucumber.json"},
+        plugin = {"json:target/reports/cucumber-report.json","html:target/reports/"},
         features = "src/test/resources/features",
         tags = {"~@ignore"},
         glue = {"steps"}
 )
 public class RunCucumberTest {
+
 
     public static WebDriver driver;
 

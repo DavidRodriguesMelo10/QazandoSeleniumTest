@@ -55,45 +55,126 @@
 
     </dependencies>
 <build>
-    <plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>Run parallel tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <forkCount>${threads}</forkCount>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <disableXmlReport>true</disableXmlReport>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <excludes>
+                        <exclude>**/IT*.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <includes>
-                        <include>src/test/java</include>
-                    </includes>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
-
             </plugin>
-       
-        <plugin>
-            <groupId>com.trivago.rta</groupId>
-            <artifactId>cluecumber-maven</artifactId>
-            <version>3.1.0</version>
-            <executions>
-                <execution>
-                    <id>report</id>
-                    <phase>post-integration-test</phase>
-                    <goals>
-                        <goal>reporting</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <sourceJsonReportDirectory>${project.build.directory}/cucumber-report</sourceJsonReportDirectory>
-                <generatedHtmlReportDirectory>${project.build.directory}/generated-report</generatedHtmlReportDirectory>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M8</version>
-        </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.trivago.rta</groupId>-->
+<!--                <artifactId>cucable-plugin</artifactId>-->
+<!--                <version>${cucable.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>generate-test-resources</id>-->
+<!--                        <phase>generate-test-resources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>parallel</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
 
-    </plugins>
+<!--                    <sourceFeatures>src/test/resources/features</sourceFeatures>-->
+<!--                    <generatedFeatureDirectory>${generated.feature.directory}</generatedFeatureDirectory>-->
+<!--                    <generatedRunnerDirectory>${generated.runner.directory}</generatedRunnerDirectory>-->
+<!--                    <parallelizationMode>scenarios</parallelizationMode>-->
+<!--                    <includeScenarioTags>${tags}</includeScenarioTags>-->
+<!--                    <logLevel>minimal</logLevel>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${maven.build.helper.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${generated.runner.directory}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.trivago.rta</groupId>-->
+<!--                <artifactId>cluecumber-report-plugin</artifactId>-->
+<!--                <version>${report.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>report</id>-->
+<!--                        <phase>post-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>reporting</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <sourceJsonReportDirectory>${cucumber.report.json.location}</sourceJsonReportDirectory>-->
+<!--                    <generatedHtmlReportDirectory>${generated.report.location}</generatedHtmlReportDirectory>-->
+<!--                    <failScenariosOnPendingOrUndefinedSteps>true</failScenariosOnPendingOrUndefinedSteps>-->
+<!--                    <expandBeforeAfterHooks>true</expandBeforeAfterHooks>-->
+<!--                    <logLevel>off</logLevel>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M8</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-cucumber-jvm -->
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-cucumber-jvm</artifactId>
+                <version>2.20.1</version>
+            </dependency>
+
+
+        </plugins>
+    </build>
 </build>
 </project>

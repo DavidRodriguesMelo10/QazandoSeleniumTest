@@ -1,0 +1,76 @@
+[
+  {
+    "comments": [
+      {
+        "line": 1,
+        "value": "# language: pt"
+      }
+    ],
+    "line": 3,
+    "elements": [
+      {
+        "line": 8,
+        "name": "Visualizar codigo de desconto",
+        "description": "",
+        "id": "receber-o-cupom-de-desconto-da-qazando;visualizar-codigo-de-desconto",
+        "type": "scenario",
+        "keyword": "Cenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 7097749400,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "que estou no site da qazando",
+            "match": {
+              "location": "DescontosSteps.que_estou_no_site_da_qazando()"
+            },
+            "keyword": "Dado "
+          },
+          {
+            "result": {
+              "duration": 3185787500,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "eu preencho meu email",
+            "match": {
+              "location": "DescontosSteps.eu_preencho_meu_email()"
+            },
+            "keyword": "Quando "
+          },
+          {
+            "result": {
+              "duration": 211828400,
+              "status": "passed"
+            },
+            "line": 11,
+            "name": "clico em ganhar cupom",
+            "match": {
+              "location": "DescontosSteps.clico_em_ganhar_cupom()"
+            },
+            "keyword": "E "
+          },
+          {
+            "result": {
+              "duration": 39361500,
+              "status": "passed"
+            },
+            "line": 12,
+            "name": "eu vejo o codigo de desconto",
+            "match": {
+              "location": "DescontosSteps.eu_vejo_o_codigo_de_desconto()"
+            },
+            "keyword": "Entao "
+          }
+        ]
+      }
+    ],
+    "name": "Receber o cupom de desconto da qazando",
+    "description": "Eu como usuario da qazando\r\nquero receber um cupom de desconto\r\npara comprar um curso com o valor menor",
+    "id": "receber-o-cupom-de-desconto-da-qazando",
+    "keyword": "Funcionalidade",
+    "uri": "desconto.feature"
+  }
+]
